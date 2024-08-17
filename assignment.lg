@@ -1,0 +1,81 @@
+to delayedPolygon :sides :length :time
+repeat :sides [forward :length right 360/:sides wait :time]
+end
+
+to myinits
+cs
+q1
+wait 60
+cs
+setpencolor 2
+q2
+wait 60
+cs
+setpencolor 3
+q3 0 50 3 100
+wait 60
+cs
+setpencolor 4
+q4
+wait 60
+cs
+setpencolor 10
+polygon 3 100
+wait 60
+cs
+setpencolor 12
+polygon 4 100
+wait 60
+for [a 5 8][setpencolor a+2 polygon a 100 cs]
+for [a 3 9 2][setpencolor a+6 star a 100 wait 60 cs]
+setpencolor 6
+walk 200 10 60
+wait 60
+cs
+setpencolor 14
+delayedPolygon 7 100 60
+wait 60
+cs
+
+
+to polygon :sides :length
+repeat :sides [forward :length right 360/:sides]
+end
+
+To q1
+Setxy 0 100
+Setxy 100 0
+Setxy 0 0
+end
+
+to q2
+polygon 6 100
+end
+
+to q3 :orientation :angle :lines :lengthOfLine 
+ifelse orientation = 0 [repeat :lines [rt (:angle/2) fd :lengthOfLine rt 180-:angle fd :lengthOfLine lt 180-(:angle/2)]][repeat :lines [rt 180-(:angle/2) fd :lengthOfLine lt 180-angle fd :lengthOfLine lt angle/2]]
+end
+
+to q4
+q3 1 50 2 100
+penup
+back 93
+pendown
+polygon 4 93
+penup
+fd 93
+right 90
+fd 93
+lt 90
+pendown
+q3 1 50 2 100
+end
+
+to star :edges :dLen
+repeat :edges [forward :dLen right 180+(180-2*(360/:edges))]
+end
+
+to walk :units :unitsAtTime :pausingTime
+repeat :units/:unitsAtTime [forward :unitsAtTime wait :pausingTime]
+end
+
