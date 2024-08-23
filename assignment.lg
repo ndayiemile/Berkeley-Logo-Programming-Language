@@ -1,7 +1,57 @@
+;function to draw apolygon
+to polygon :sides :length
+repeat :sides [forward :length right 360/:sides]
+end
+
+;function to draw a polygon by side at a time
 to delayedPolygon :sides :length :time
 repeat :sides [forward :length right 360/:sides wait :time]
 end
 
+;function to draw a star NB_start should have odd number edges
+to star :edges :dLen
+repeat :edges [forward :dLen right 180+(180-2*(360/:edges))]
+end
+
+;function to walk
+to walk :units :unitsAtTime :pausingTime
+repeat :units/:unitsAtTime [forward :unitsAtTime wait :pausingTime]
+end
+
+;to draw a triangle
+To q1
+Setxy 0 100
+Setxy 100 0
+Setxy 0 0
+end
+
+;to draw a hexagon
+to q2
+polygon 6 100
+end
+
+;to draw a zigzag NB: orientantion can be 0 or 1
+to q3 :orientation :angle :lines :lengthOfLine 
+ifelse orientation = 0 [repeat :lines [rt (:angle/2) fd :lengthOfLine rt 180-:angle fd :lengthOfLine lt 180-(:angle/2)]][repeat :lines [rt 180-(:angle/2) fd :lengthOfLine lt 180-angle fd :lengthOfLine lt angle/2]]
+end
+
+;to draw zigzags and a sqr 
+to q4
+q3 1 50 2 100
+penup
+back 93
+pendown
+polygon 4 93
+penup
+fd 93
+right 90
+fd 93
+lt 90
+pendown
+q3 1 50 2 100
+end
+
+;my initis function
 to myinits
 cs
 q1
@@ -36,46 +86,4 @@ setpencolor 14
 delayedPolygon 7 100 60
 wait 60
 cs
-
-
-to polygon :sides :length
-repeat :sides [forward :length right 360/:sides]
 end
-
-To q1
-Setxy 0 100
-Setxy 100 0
-Setxy 0 0
-end
-
-to q2
-polygon 6 100
-end
-
-to q3 :orientation :angle :lines :lengthOfLine 
-ifelse orientation = 0 [repeat :lines [rt (:angle/2) fd :lengthOfLine rt 180-:angle fd :lengthOfLine lt 180-(:angle/2)]][repeat :lines [rt 180-(:angle/2) fd :lengthOfLine lt 180-angle fd :lengthOfLine lt angle/2]]
-end
-
-to q4
-q3 1 50 2 100
-penup
-back 93
-pendown
-polygon 4 93
-penup
-fd 93
-right 90
-fd 93
-lt 90
-pendown
-q3 1 50 2 100
-end
-
-to star :edges :dLen
-repeat :edges [forward :dLen right 180+(180-2*(360/:edges))]
-end
-
-to walk :units :unitsAtTime :pausingTime
-repeat :units/:unitsAtTime [forward :unitsAtTime wait :pausingTime]
-end
-
